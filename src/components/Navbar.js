@@ -16,13 +16,13 @@ export default function Navbar() {
             <Router>
     <div>
       <ul className="flex justify-center border-b-2 border-gray-300 shadow-inner bg-white">
-        <li className="p-4 px-6 text-xl hover:shadow-inner hover:font-bold hover:text-orange-500 ">
+        <li className="p-4 px-6 text-xl hover:shadow-inner hover:font-bold hover:text-orange-550 ">
           <Link to="/">Dashboard</Link>
         </li>
-        <li  className="p-4 px-6 text-xl hover:shadow-inner hover:font-bold hover:text-orange-500">
+        <li  className="p-4 px-6 text-xl hover:shadow-inner hover:font-bold hover:text-orange-550">
           <Link to="/notebooks">Notebooks</Link>
         </li>
-        <li  className="p-4 px-6 text-xl hover:shadow-inner hover:font-bold hover:text-orange-500">
+        <li  className="p-4 px-6 text-xl hover:shadow-inner hover:font-bold hover:text-orange-550">
           <Link to="/profile">Profile</Link>
         </li>
       </ul>
