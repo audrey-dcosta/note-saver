@@ -1,7 +1,7 @@
 const express=require('express')
 const dotenv=require('dotenv').config()
 const app=express()
-const routes=require('./routes/routes')
+const router=require('./routes/routes')
 const notebook_model=require('./models/notebook_model')
 
 const PORT=process.env.PORT
@@ -18,7 +18,7 @@ app.get('/',(req,res)=>{
     res.status(200).send('Hello')
 })
 
-app.use('/api',routes)
+app.use('/api',router)
 
 // app.get('/notebooks',(req,res)=>{
 //     notebook_model.getNotebooks()
