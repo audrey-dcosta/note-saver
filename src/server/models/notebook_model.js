@@ -1,75 +1,89 @@
-const Pool = require('pg').Pool
 const dbconn=require('../config/databaseConnection')
+const {Pool}=require('pg')
+const pool=new Pool(dbconn)
+pool.connect(err=>{
+    if(err){
+        console.log('connection error',err.stack)
+    }
+    else{
+        console.log('connected')
+    }
+})
 
-const pool=new Pool(dbconn);
-
-const getNotebooks=()=>{
-    return new Promise(function(resolve,reject){
-        pool.query('SELECT * FROM notebooks ORDER BY notebook_id ASC',(error,results)=>{
-            if(error){
-                reject(error)
-            }
-            resolve(results.rows)
-        })
-    })
-}
-const getNotebook=()=>{
-    return new Promise(function(resolve,reject){
-        const id=parseInt(request.params.id)
-        pool.query('SELECT FROM notebook WHERE id= $1',[id],(error,results)=>{
-            if(error){
-                reject(error)
-            }
-            resolve(results.rows)
-        })
-    })
-}
-
-const createNotebook=(body)=>{
-    return new Promise(function(resolve,reject){
-        const {name,description}=body
-        pool.query('INSERT INTO notebooks (name,description) VALUES ($1,$2) RETURNING *',[name,description],(error,results)=>{
-            if(error){
-                reject(error)
-            }
-            resolve(`notebook added:${results.rows[0]}`)
-        })
-    })
-}
-
-const deleteNotebook=()=>{
-    return new Promise(function(resolve,reject){
-        const id=parseInt(request.params.id)
-        pool.query('DELETE FROM notebooks WHERE id=$1',[id],(error,results)=>{
-            if(error){
-                reject(error)
-            }
-            resolve(`notebook deleted with id:${id}`)
-        })
-    })
-}
-
-const updateNotebook=async=>{
+const getNotebooks= async (req, res) => {
     try{
-        const id=parseInt(request.params.id)
-        const name=parseInt(request.params.name)
-        pool.query('UPDATE notebook SET name=$1 WHERE id=$2',[id,name],(error,results)=>{
-            if (error) {
-                console.log(error)
-            }
-            console.log(`note deleted with id ${id}`)
-        })
+    const { rows } = await pool.query('SELECT * FROM notebooks ORDER BY notebook_id ASC')
+    res.send(rows)
     }
     catch(err){
-        console.log(err)
+        res.send(err.message)
+        console.log(err.message)
     }
-    
 }
+
+const getNotebook= async (req, res) => {
+    try{
+        const { id } = req.params
+        console.log(id)
+        const { rows } = await pool.query('SELECT * FROM notebooks where notebook_id=$1',[id])
+        console.log(rows)
+        res.send(rows)
+    }
+    catch(err){
+        res.send(err.message)
+        console.log(err.message)
+    }
+}
+
+const createNotebook= async (req, res) => {
+    try{
+        const {name,description}=req.body
+        const createdAt=new Date()
+        console.log(createdAt)
+        const { rows } = await pool.query('INSERT INTO notebooks (notebook_name,notebook_desc,"notebook_createdAt") VALUES ($1,$2,$3) RETURNING *',[name,description,createdAt])
+        console.log(`notebook added:${rows}`)
+        res.send(rows)
+
+    }
+    catch(err){
+        res.send(err.message)
+        console.log(err.message)
+    }
+}
+const deleteNotebook= async (req, res) => {
+    try{
+        const id=parseInt(req.params.id)
+        const { rows } = await pool.query('DELETE FROM notebooks WHERE notebook_id=$1',[id])
+        console.log(`deleted notebook at:${id}`)
+        res.send(`deleted notebook at:${id}`)
+
+    }
+    catch(err){
+        res.send(err.message)
+        console.log(err.message)
+    }
+}
+const updateNotebook= async (req, res) => {
+    try{
+        const id=parseInt(req.params.id)
+        const {name}=req.body
+        console.log(name)
+        const { rows } = await pool.query('UPDATE notebooks SET notebook_name=$1 WHERE notebook_id=$2',[name,id])
+        console.log(`updated notebook at:${id}`)
+        res.send(`updated notebook at:${id}`)
+
+    }
+    catch(err){
+        res.send(err.message)
+        console.log(err.message)
+    }
+}
+
 
 module.exports={
     getNotebooks,
     getNotebook,
     createNotebook,
     deleteNotebook,
-    updateNotebook,
+    updateNotebook
 }

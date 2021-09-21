@@ -1,75 +1,86 @@
-const Pool = require('pg').Pool
 const dbconn=require('../config/databaseConnection')
-const pool=new Pool(dbconn);
+const {Pool}=require('pg')
+const pool=new Pool(dbconn)
+pool.connect(err=>{
+    if(err){
+        console.log('connection error',err.stack)
+    }
+    else{
+        console.log('connected')
+    }
+})
 
-const getNotes=()=>{
-    return new Promise(function(resolve,reject){
-        pool.query('SELECT * FROM notes ORDER BY notebook_id ASC',(error,results)=>{
-            if(error){
-                reject(error)
-            }
-            resolve(results.rows)
-        })
-    })
-}
-
-const getNote=()=>{
-    return new Promise(function(resolve,reject){
-        const id=parseInt(request.params.id)
-        pool.query('SELECT FROM notes WHERE id= $1',[id],(error,results)=>{
-            if(error){
-                reject(error)
-            }
-            resolve(results.rows)
-        })
-    })
-}
-
-const createNote=(body)=>{
-    return new Promise(function(resolve,reject){
-        const {name,description}=body
-        pool.query('INSERT INTO notes (name,content) VALUES ($1,$2) RETURNING *',[name,description],(error,results)=>{
-            if(error){
-                reject(error)
-            }
-            resolve(`notebook added:${results.rows[0]}`)
-        })
-    })
-}
-
-const deleteNote=()=>{
-    return new Promise(function(resolve,reject){
-        const id=parseInt(request.params.id)
-        pool.query('DELETE FROM notebooks WHERE id=$1',[id],(error,results)=>{
-            if(error){
-                reject(error)
-            }
-            resolve(`notebook deleted with id:${id}`)
-        })
-    })
-}
-
-const updateNote=async=>{
+const getAllNotes= async (req, res) => {
     try{
-        const id=parseInt(request.params.id)
-        const name=parseInt(request.params.name)
-        pool.query('UPDATE NOTE SET name=$1 WHERE id=$2',[id,name],(error,results)=>{
-            if (error) {
-                console.log(error)
-            }
-            console.log(`note deleted with id ${id}`)
-        })
+    const { rows } = await pool.query('SELECT * FROM notebooks ORDER BY notebook_id ASC')
+    res.send(rows)
     }
     catch(err){
-        console.log(err)
+        res.send(err.message)
+        console.log(err.message)
     }
-    
+}
+const getNotesInNotebook= async (req, res) => {
+    try{
+    const id=req.params.id
+    const { rows } = await pool.query('SELECT * FROM notes WHERE notebook_id=$1 ORDER BY noteid ASC',[id])
+    res.send(rows)
+    }
+    catch(err){
+        res.send(err.message)
+        console.log(err.message)
+    }
 }
 
+const addNote =async (req, res) => {
+    try{
+        const id=req.params.id
+        const {title,content}=req.body
+        const createdAt=new Date()
+        console.log(createdAt)
+        const { rows } = await pool.query('INSERT INTO notes (notebook_id,note_title,note_content,"note_createdAt") VALUES ($1,$2,$3,$4) RETURNING *',[id,title,content,createdAt])
+        console.log(`notebook added:${rows}`)
+        res.send(rows)
+
+    }
+    catch(err){
+        res.send(err.message)
+        console.log(err.message)
+    }
+}
+const deleteNote= async (req, res) => {
+    try{
+        const id=parseInt(req.params.id)
+        const { rows } = await pool.query('DELETE FROM notes WHERE note_id=$1',[id])
+        console.log(`deleted note at:${id}`)
+        res.send(`deleted note at:${id}`)
+
+    }
+    catch(err){
+        res.send(err.message)
+        console.log(err.message)
+    }
+}
+const updateNote= async (req, res) => {
+    try{
+        const id=parseInt(req.params.id)
+        const {title}=req.body
+        const { rows } = await pool.query('UPDATE notebooks SET note_title=$1 WHERE note_id=$2',[title,id])
+        console.log(`updated note at id:${id}`)
+        res.send(`updated note at id:${id}`)
+
+    }
+    catch(err){
+        res.send(err.message)
+        console.log(err.message)
+    }
+}
+
+
 module.exports={
-    getNotes,
-    getNote,
-    createNote,
+    getAllNotes,
+    getNotesInNotebook,
+    addNote,
     deleteNote,
     updateNote
 }

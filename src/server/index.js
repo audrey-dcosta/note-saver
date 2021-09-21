@@ -1,7 +1,7 @@
 const express=require('express')
 const dotenv=require('dotenv').config()
 const app=express()
-
+const routes=require('./routes/routes')
 const notebook_model=require('./models/notebook_model')
 
 const PORT=process.env.PORT
@@ -14,19 +14,23 @@ app.use(function(req,res,next){
     next();
 });
 
-app.get('/notebooks',(req,res)=>{
-    notebook_model.getNotebooks()
-    .then(response=>{
-        res.status(200).send(response);
-    })
-    .catch(error=>{
-        res.status(500).send(error);
-    })
-})
-
 app.get('/',(req,res)=>{
     res.status(200).send('Hello')
 })
+
+app.use('/api',routes)
+
+// app.get('/notebooks',(req,res)=>{
+//     notebook_model.getNotebooks()
+//     .then(response=>{
+//         res.status(200).send(response);
+//     })
+//     .catch(error=>{
+//         res.status(500).send(error);
+//     })
+// })
+
+
 
 app.listen(PORT,()=>{
     console.log(`running on ${PORT}`)
