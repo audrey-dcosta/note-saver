@@ -23,7 +23,7 @@ const getAllNotes= async (req, res) => {
 const getNotesInNotebook= async (req, res) => {
     try{
     const id=req.params.id
-    const { rows } = await pool.query('SELECT * FROM notes WHERE notebook_id=$1 ORDER BY noteid ASC',[id])
+    const { rows } = await pool.query('SELECT * FROM notes WHERE notebook_id=$1 ORDER BY note_id ASC',[id])
     res.send(rows)
     }
     catch(err){

@@ -6,6 +6,16 @@
 body{
   background-color: rgb(240, 240, 240);
 }
+.square{
+  margin-bottom: 4px;
+  width:15vw;
+  height: 15vw;
+}
+.smsquare{
+  margin-bottom: 4px;
+  width:40vw;
+  height: 40vw;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

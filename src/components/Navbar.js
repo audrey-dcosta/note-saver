@@ -47,17 +47,14 @@ export default function Navbar() {
 
      
       <Switch>
-        <Route path="/">
-          <NotebookList />
+        <Route exact path="/notebook/:id">
+          <NoteList />
         </Route>
-        <Route path="/notes">
-          <NotebookList/>
-        </Route>
-        <Route path="/profile">
+        <Route exact path="/profile">
           <Profile/>
         </Route>
-        <Route path="/notebook/:id">
-          <NoteList />
+        <Route path="/">
+          <NotebookList />
         </Route>
       </Switch>
     </div>
