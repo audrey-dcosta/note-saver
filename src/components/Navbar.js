@@ -33,7 +33,7 @@ export default function Navbar() {
                 </ul>
             </div>
         
-            <div onClick={() => setMenuOpen(!menuOpen)} className="bg-gray-100 p-1 rounded-md flex justify-self-end self-end sm:hidden">
+            <div onClick={() => setMenuOpen(!menuOpen)} className="bg-gray-100 text-gray-700 p-1 rounded-md flex justify-self-end self-end sm:hidden">
                 {menuOpen?<MdClose/>:<AiOutlineMenu className="h-6 w-6"/>}
             </div>
             {menuOpen?<ul className=" justify-self-center ">
