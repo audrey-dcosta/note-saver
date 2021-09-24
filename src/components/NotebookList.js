@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import { Notebook } from './Notebook'
 import {GoPlus} from 'react-icons/go'
 import {Redirect,useParams,useHistory,generatePath} from 'react-router-dom'
+import {SkeletonNotebook} from './Skeletons/SkeletonNotebook'
 
 
 export default function NotebookList() {
@@ -35,8 +36,15 @@ export default function NotebookList() {
                 {notebooks.map((notebook)=><Notebook key={notebook.notebook_id} notebook={notebook} handleClick={handleClick}>
                     
                  </Notebook>)}
+
             </div>
+
             )}
+             {!notebooks && (
+                <div className="grid grid-cols-2 items-center justify-items-center gap-1 w-full sm:w-11/12 sm:grid-cols-4 sm:gap-4 md:w-4/6">
+                    {[1,2,3,4,5,6,7,8].map((i)=><SkeletonNotebook key={i}/>)}
+                </div>
+                )}
     {isRedirect?<Redirect to={`/notebook/:${id}`}/>:null}
     </div>
     )

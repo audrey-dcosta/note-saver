@@ -5,6 +5,9 @@ module.exports = {
       sans: ['"PT Sans"', 'sans-serif']
     },
     extend: {
+      spacing: {
+        '1/1': '100%',
+    },
       colors: {
         orange: {
           550: '#b52d00',
@@ -37,5 +40,7 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 }
