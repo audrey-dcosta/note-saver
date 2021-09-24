@@ -12,8 +12,6 @@ export default function NotebookList() {
 
     const handleClick=(id)=>{
         history.push(`/notebook/${id}`);
-        
-
     }
 
 

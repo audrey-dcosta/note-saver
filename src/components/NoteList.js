@@ -7,10 +7,10 @@ export default function NoteList() {
     let {id}=useParams()
 
     useEffect( () => {
-        loadDatas()
+        loadNotes()
     }, [])
 
-    const loadDatas=()=>{
+    const loadNotes=()=>{
         console.log('started')
         fetch('http://localhost:3001/api/notebook/7')
         .then(response=>response.json())
@@ -22,16 +22,13 @@ export default function NoteList() {
             console.log(exception)
         })
     }
-
-
     
     return (
-        <div>
-            <div>
-                <div className="m-2 bg-gray-100 rounded-lg">
-                    <p></p>
-                    {notes && (<h1>{notes.map(note=><Note key={note.note_id} note={note}/>)} </h1>)}
-                </div>
+        <div className="flex flex-col items-center p-4 h-full">
+            <div className="w-full sm:w-4/6 p-2 flex flex-col bg-white h-full rounded-xl items-stretch">
+                {/* <div className="p-2 bg-white h-full"> */}
+                    {notes && (<div><h1 className="text-3xl pl-2 font-medium">React</h1>{notes.map(note=><Note key={note.note_id} note={note}/>)} </div>)}
+                {/* </div> */}
             </div>
         </div>
     )
