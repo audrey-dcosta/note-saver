@@ -2,7 +2,7 @@ import React,{ Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 export const AddNotebook = ({isOpen,closeModal}) => {
-    const initialFormData=Object.freeze({notebook_name:'',notebook_description:''})
+    const initialFormData=Object.freeze({name:'',description:''})
     const [formData,updateFormData]=useState(initialFormData)
     
     const handleChange=(e)=>{
@@ -11,17 +11,36 @@ export const AddNotebook = ({isOpen,closeModal}) => {
         ...formData,
         [e.target.name]:e.target.value.trim()
       })
-      console.log('bbbbb')
+      console.log(formData)
       // setNotebook(e.target.name:e.target.value)
   }
   
-  const handleSubmit=(e)=>{
-    console.log('aaaaa')
-    e.preventDefault()
-    updateFormData({
-      ...formData,
+//   const handleSubmit=(e)=>{
+//     console.log('aaaaa')
+//     e.preventDefault()
+//     updateFormData({
+//       ...formData,
+//     })
+//     console.log(formData)
+//   }
+
+  function handleSubmit(){
+
+      console.log('jjj')
+      console.log(formData)
+      console.log('jjj')
+    fetch('http://localhost:3001/api/notebook/add',{
+        method:"POST",
+        // mode:"no-cors",
+        body:JSON.stringify(formData),
+        headers:{Accept:"application/json",
+        "Content-type":"application/json"}
+    }).then(response=>response.json()).then(result=>{
+        console.log(result)
+        closeModal()
+    }).catch(err=>{
+        console.log(err)
     })
-    console.log(formData)
   }
     return (
         <>
@@ -69,8 +88,8 @@ export const AddNotebook = ({isOpen,closeModal}) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={handleSubmit}>
-                      <input name="notebook_name" onChange={handleChange} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Enter Notebook name"/>
-                      <textarea name="notebook_description" onChange={handleChange} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" placeholder="Description"/>
+                      <input name="name" onChange={handleChange} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Enter Notebook name"/>
+                      <textarea name="description" onChange={handleChange} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" placeholder="Description"/>
                       {/* <div className="flex space-x-4">
                       <input className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Add Tag"/>
                       <button className="ring-2 bg-orange-550 ring-orange-550 my-4 p-1 text-gray-50 rounded-lg font-medium px-3 text-3xl">+</button>

@@ -36,7 +36,7 @@ export default function NotebookList() {
         <div className="p-1 sm:p-6 flex items-center justify-center w-full ">
         {notebooks && (
             <div className="grid grid-cols-2 items-center justify-items-center gap-1 w-full sm:w-11/12 sm:grid-cols-4 sm:gap-4 md:w-4/6">
-                <div onClick={toggleModal} class="group text-3xl box-content  w-full rounded-lg text-orange-550 flex flex-col justify-center items-center border-4 h-full border-orange-550 hover:bg-orange-550 hover:shadow-lg hover:text-white hover:border-transparent">
+                <div onClick={toggleModal} className="group text-3xl box-content  w-full rounded-lg text-orange-550 flex flex-col justify-center items-center border-4 h-full border-orange-550 hover:bg-orange-550 hover:shadow-lg hover:text-white hover:border-transparent">
                 <GoPlus/>
                 </div>
                 {notebooks.map((notebook)=><Notebook key={notebook.notebook_id} notebook={notebook} handleClick={handleClick}>
