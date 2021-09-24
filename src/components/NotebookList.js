@@ -1,19 +1,25 @@
 import React,{useState,useEffect} from 'react'
 import { Notebook } from './Notebook'
+import { AddNotebook } from './AddNotebook'
 import {GoPlus} from 'react-icons/go'
-import {Redirect,useParams,useHistory,generatePath} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import {SkeletonNotebook} from './Skeletons/SkeletonNotebook'
 
 
 export default function NotebookList() {
     const [notebooks, setNotebooks] = useState(null)
-    const [isRedirect, setIsRedirect] = useState(false)
-    const [id, setId] = useState()
+    let [isOpen,setIsOpen]= useState(false)
+    
     const history= useHistory()
 
     const handleClick=(id)=>{
         history.push(`/notebook/${id}`);
     }
+
+    function toggleModal() {
+        setIsOpen(!isOpen)
+      }
+
 
 
     useEffect(() => {
@@ -30,7 +36,7 @@ export default function NotebookList() {
         <div className="p-1 sm:p-6 flex items-center justify-center w-full ">
         {notebooks && (
             <div className="grid grid-cols-2 items-center justify-items-center gap-1 w-full sm:w-11/12 sm:grid-cols-4 sm:gap-4 md:w-4/6">
-                <div class="group text-3xl box-content  w-full rounded-lg text-orange-550 flex flex-col justify-center items-center border-4 h-full border-orange-550 hover:bg-orange-550 hover:shadow-lg hover:text-white hover:border-transparent">
+                <div onClick={toggleModal} class="group text-3xl box-content  w-full rounded-lg text-orange-550 flex flex-col justify-center items-center border-4 h-full border-orange-550 hover:bg-orange-550 hover:shadow-lg hover:text-white hover:border-transparent">
                 <GoPlus/>
                 </div>
                 {notebooks.map((notebook)=><Notebook key={notebook.notebook_id} notebook={notebook} handleClick={handleClick}>
@@ -45,7 +51,9 @@ export default function NotebookList() {
                     {[1,2,3,4,5,6,7,8].map((i)=><SkeletonNotebook key={i}/>)}
                 </div>
                 )}
-    {isRedirect?<Redirect to={`/notebook/:${id}`}/>:null}
+            
+            {isOpen && <AddNotebook isOpen={isOpen} closeModal={toggleModal}></AddNotebook>}
+
     </div>
     )
 }
