@@ -1,41 +1,23 @@
 import React from 'react'
 import {AiFillBook}  from "react-icons/ai";
 import {ImFilesEmpty}  from "react-icons/im";
+import {HiChevronRight} from 'react-icons/hi'
+import {OptionsMenu} from './OptionsMenu'
 
-export const Notebook = ({notebook,handleClick}) => {
+export const Notebook = ({notebook,handleClick,delete_notebook}) => {
     return (
-        <div onClick={()=>{handleClick(notebook.notebook_id)}} className="box-content bg-white w-full rounded-lg">
-        <div className="p-2 sm:p-4 flex flex-col justify-between h-full">
-            <div className="w-full">
-            <div className="text-lg sm:text-2xl flex space-x-2 text-gray-900 font-bold items-center group-hover:text-gray-50"><AiFillBook/>
-                 <span>{notebook.notebook_name}</span>
-             </div>
-            <div className="text-sm sm:text-md py-2 text-gray-500 group-hover:text-gray-50">{notebook.notebook_desc}</div>
-                
-            </div>
-        <div className="mt-2 sm:mt-10 w-1/5 place-self-end ">
-        <div className="flex align-middle space-x-1 text-gray-500 font-semibold p-1 mt-2 text-sm group-hover:text-gray-50">
-                 <ImFilesEmpty/>
-             <span>12</span>
-             </div>
+        <div className="box-content bg-white w-full rounded-lg">
+                <div className="p-2 sm:p-4 flex flex-col justify-between h-full ">
+                    <div className="w-full flex justify-between  align-middle items-center">
+                        <span className="font-semibold text-gray-800 text-2xl truncate">{notebook.notebook_name}</span>
+                        <OptionsMenu delete_notebook={delete_notebook} id={notebook.notebook_id}/>
+                    </div>
+                <div className="mt-2 sm:mt-12 flex justify-end w-full ">
+                    <button  onClick={()=>{handleClick(notebook.notebook_id)}} className="p-2 flex rounded-lg bg-gray-100 items-center hover:bg-orange-550 hover:text-gray-100"><span>View</span><HiChevronRight/></button>
 
+                </div>
+                </div>
         </div>
-        </div>
-</div>
-    //     <div onClick={()=>{handleClick(notebook.notebook_id)}} className=" group flex flex-col justify-between bg-white rounded-lg p-4 pb-2 shadow-xl border-4 border-white hover:bg-orange-550 hover:border-orange-550 ">
-    //     <div className="">
-    //         <div className="text-lg sm:text-2xl flex space-x-2 text-gray-900 font-bold items-center group-hover:text-gray-50"><AiFillBook/>
-    //             <span>{notebook.notebook_name}</span>
-    //         </div>
-    //         <div className="text-sm sm:text-md py-2 text-gray-500 group-hover:text-gray-50">{notebook.notebook_desc}</div>
-    //     </div>
-    //     <div className="flex justify-end ">
-    //         <div className="flex align-middle space-x-1 text-gray-500 font-semibold p-1 mt-2 text-sm group-hover:text-gray-50">
-    //             <ImFilesEmpty/>
-    //             <span>12</span>
-    //         </div>
-    //     </div>
-    // </div>
 
     )
 }
