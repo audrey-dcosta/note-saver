@@ -1,8 +1,12 @@
 import { Menu, Transition } from '@headlessui/react'
 import React,{ Fragment, useEffect, useRef, useState } from 'react'
 import {HiOutlineDotsVertical,HiPencil,HiTrash } from 'react-icons/hi'
+import {ConfirmAlert} from './ConfirmAlert'
 
 export const OptionsMenu = ({delete_notebook,id}) => {
+  function toggleModal() {
+    setOpen(!isOpen)
+  }
     return (
         <div className="text-right ">
         <Menu as="div" className="relative inline-block text-left">
