@@ -7,8 +7,9 @@ router.get('/notebooks', notebook.getNotebooks)
 router.post('/notebook/add', notebook.createNotebook)
 router.delete('/notebook/:id', notebook.deleteNotebook)
 router.put('/notebook/:id', notebook.updateNotebook)
+router.get('/notebook/:id', notebook.getNotebook)
 
-router.get('/notebook/:id', note.getNotesInNotebook)
+router.get('/notebookNotes/:id', note.getNotesInNotebook)
 
 /*router for notes */
 router.get('/notes', note.getAllNotes)

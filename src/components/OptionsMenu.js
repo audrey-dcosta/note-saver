@@ -3,10 +3,20 @@ import React,{ Fragment, useEffect, useRef, useState } from 'react'
 import {HiOutlineDotsVertical,HiPencil,HiTrash } from 'react-icons/hi'
 import {ConfirmAlert} from './ConfirmAlert'
 
-export const OptionsMenu = ({delete_notebook,id}) => {
-  function toggleModal() {
-    setOpen(!isOpen)
-  }
+export const OptionsMenu = ({delete_notebook,id,getNotebookById}) => {
+//   const [notebook, setNotebook] = useState()
+
+//   function getNotebookById(){
+//     fetch(`http://localhost:3001/api/notebook/${id}`)
+//     .then(res=>res.json())
+//     .then(data=>{
+//         console.log(data)
+//         setNotebook(data)
+//         toggleModal()
+//     })
+//     .catch(err=>{console.log(err)})
+// }
+
     return (
         <div className="text-right ">
         <Menu as="div" className="relative inline-block text-left">
@@ -29,6 +39,7 @@ export const OptionsMenu = ({delete_notebook,id}) => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
+                    onClick={getNotebookById(id)}
                       className={`${
                         active ? 'bg-orange-550 text-white' : 'text-gray-900'
                       } group flex rounded-md items-center w-full px-2 py-2 text-sm`}

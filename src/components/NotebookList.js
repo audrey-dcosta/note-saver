@@ -4,11 +4,14 @@ import { AddNotebook } from './AddNotebook'
 import {GoPlus} from 'react-icons/go'
 import {useHistory} from 'react-router-dom'
 import {SkeletonNotebook} from './Skeletons/SkeletonNotebook'
+// import {UpdateNotebook} from './/UpdateNotebook'
 
 
 export default function NotebookList() {
     const [notebooks, setNotebooks] = useState(null)
+    const [notebook, setNotebook] = useState(null)
     let [isOpen,setIsOpen]= useState(false)
+    let [updateOpen,setUpdateOpen]= useState(false)
     
     const history= useHistory()
 
@@ -16,6 +19,9 @@ export default function NotebookList() {
         history.push(`/notebook/${id}`);
     }
 
+    function toggleUpdate() {
+        setUpdateOpen(!updateOpen)
+      }
     function toggleModal() {
         setIsOpen(!isOpen)
       }
@@ -34,6 +40,26 @@ export default function NotebookList() {
         }).catch(exception=>{
             console.log(exception)
         })
+
+    }
+    
+    function getNotebookById(id){
+        fetch(`http://localhost:3001/api/notebook/${id}`)
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            setNotebook(data)
+            // toggleUpdate()
+        })
+    }
+
+    function update_notebook(id){
+        fetch(`http://loclhost:3001/api/notebook/${id}`,{
+            method:"PUT",
+        })
+        .then(res=>res.text())
+        .then(data=>{console.log('updated')})
+        .catch(err=>console.log(err))
 
     }
 
@@ -60,12 +86,11 @@ export default function NotebookList() {
                 <span>Notebook</span>
                 </div>
                 </div>
-                {notebooks.map((notebook)=><Notebook key={notebook.notebook_id} notebook={notebook} handleClick={handleClick} delete_notebook={delete_notebook}>
+                {notebooks.map((notebook)=><Notebook key={notebook.notebook_id} notebook={notebook} handleClick={handleClick} delete_notebook={delete_notebook} getNotebookById={getNotebookById}>
                     
                  </Notebook>)}
 
             </div>
-
             )}
              {!notebooks && (
                 <div className="grid grid-cols-2 items-center justify-items-center gap-1 w-full sm:w-11/12 sm:grid-cols-4 sm:gap-4 md:w-4/6">
@@ -74,6 +99,7 @@ export default function NotebookList() {
                 )}
             
             {isOpen && <AddNotebook isOpen={isOpen} closeModal={toggleModal}></AddNotebook>}
+            {/* {updateOpen && <UpdateNotebook isOpen={isOpen} closeModal={toggleUpdate} notebook={notebook} updateOpen={updateOpen} update_notebook={update_notebook}></UpdateNotebook>} */}
 
     </div>
     )
