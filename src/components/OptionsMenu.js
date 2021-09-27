@@ -39,7 +39,7 @@ export const OptionsMenu = ({delete_notebook,id,getNotebookById}) => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                    onClick={getNotebookById(id)}
+                    onClick={()=>getNotebookById(id)}
                       className={`${
                         active ? 'bg-orange-550 text-white' : 'text-gray-900'
                       } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
@@ -52,7 +52,7 @@ export const OptionsMenu = ({delete_notebook,id,getNotebookById}) => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                    onClick={delete_notebook(id)}
+                    onClick={()=>delete_notebook(id)}
                       className={`${
                         active ? 'bg-orange-550 text-white' : 'text-gray-900'
                       } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
