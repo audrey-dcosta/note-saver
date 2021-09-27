@@ -4,8 +4,9 @@ import { AddNotebook } from './AddNotebook'
 import {GoPlus} from 'react-icons/go'
 import {useHistory} from 'react-router-dom'
 import {SkeletonNotebook} from './Skeletons/SkeletonNotebook'
-import {UpdateNotebook} from './/UpdateNotebook'
-
+import {UpdateNotebook} from './UpdateNotebook'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function NotebookList() {
     const [notebooks, setNotebooks] = useState(null)
@@ -14,6 +15,9 @@ export default function NotebookList() {
     let [updateOpen,setUpdateOpen]= useState(false)
     
     const history= useHistory()
+
+    const notify = (text) => toast.success(text);
+
 
     const handleClick=(id)=>{
         history.push(`/notebook/${id}`);
@@ -54,14 +58,20 @@ export default function NotebookList() {
         })
     }
 
-    function update_notebook(id){
-        fetch(`http://loclhost:3001/api/notebook/${id}`,{
-            method:"PUT",
-        })
-        .then(res=>res.text())
-        .then(data=>{console.log('updated')})
-        .catch(err=>console.log(err))
-
+    function update_notebook(formData,id){
+      fetch(`http://localhost:3001/api/notebook/${id}`,{
+          method:"PUT",
+          body:JSON.stringify(formData),
+          headers:{Accept:"application/json",
+          "Content-type":"application/json"}
+      }).then(result=>{
+          console.log(result)
+          toggleUpdate()
+          notify('updated Notebook')
+          loadNotebooks()
+      }).catch(err=>{
+          console.log(err)
+      })
     }
     function createNotebook(formData){
         console.log('jjj')
@@ -76,6 +86,7 @@ export default function NotebookList() {
       }).then(response=>response.json()).then(result=>{
           console.log(result)
           toggleCreate()
+          notify(`created Notebook ${formData.name}`)
       }).catch(err=>{
           console.log(err)
       })
@@ -88,6 +99,7 @@ export default function NotebookList() {
         })
         .then(response=>response.text())
         .then(result=>{
+            notify('deleted Notebook')
             console.log('deleted')
             loadNotebooks()
         }).catch(err=>{
@@ -97,6 +109,18 @@ export default function NotebookList() {
 
     return (
         <div className="p-1 sm:p-6 flex items-center justify-center w-full ">
+        <ToastContainer 
+        progressClassName={{ backgroundColor: "crimson" }}
+        position="bottom-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover/>
+            
         {notebooks && (
             <div className="grid grid-cols-2 items-center justify-items-center gap-1 w-full sm:w-11/12 sm:grid-cols-4 sm:gap-4 md:w-4/6">
                 <div onClick={toggleCreate} className="group box-content  border-4 border-dashed border-gray-200 w-full rounded-lg text-orange-550 flex flex-col justify-center items-center h-full  hover:bg-orange-550 hover:shadow-lg hover:text-white hover:border-transparent">

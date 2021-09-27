@@ -1,7 +1,17 @@
 import React,{ Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-export const UpdateNotebook = ({updateOpen,toggleUpdate,notebook,update_notebook}) => {
+export const UpdateNotebook = ({updateOpen,toggleUpdate,notebook,update_notebook,id}) => {
+  const [formData,updateFormData]=useState()
+  
+  const handleChange=(e)=>{
+    e.preventDefault()
+    updateFormData({
+      ...formData,
+      [e.target.name]:e.target.value.trim()
+    })
+    console.log(formData)
+}
 
     return (
         <>
@@ -48,9 +58,9 @@ export const UpdateNotebook = ({updateOpen,toggleUpdate,notebook,update_notebook
                     Update Notebook
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form >
-                      <input name="name" defaultValue={notebook.notebook_name} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Enter Notebook name"/>
-                      <textarea name="description" defaultValue={notebook.notebook_desc} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" placeholder="Description"/>
+                    <form onSubmit={()=>update_notebook(formData,notebook.notebook_id)}>
+                      <input name="name" onChange={handleChange} defaultValue={notebook.notebook_name} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Enter Notebook name"/>
+                      <textarea name="description" onChange={handleChange} defaultValue={notebook.notebook_desc} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" placeholder="Description"/>
                       {/* <div className="flex space-x-4">
                       <input className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Add Tag"/>
                       <button className="ring-2 bg-orange-550 ring-orange-550 my-4 p-1 text-gray-50 rounded-lg font-medium px-3 text-3xl">+</button>
@@ -60,18 +70,22 @@ export const UpdateNotebook = ({updateOpen,toggleUpdate,notebook,update_notebook
   
                   <div className="mt-4 flex justify-end space-x-4">
                   <button
-                      type="Submit"
+                      type="button"
+                      onClick={toggleUpdate}
                       className="inline-flex justify-center px-4 py-2 text-lg font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md hover:bg-orange-550 hover:text-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                       
                     >
                       Cancel
                     </button>
                     <button
-                      type="button"
+                      onClick={()=>update_notebook(formData,notebook.notebook_id)}
+                      type="Submit"
                       className="inline-flex justify-center px-4 py-2 text-lg font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md hover:bg-orange-550 hover:text-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                       
                     >
-                      Add
+                      <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+  </svg>
+                      Update
                     </button>
                   </div>
                 </div>

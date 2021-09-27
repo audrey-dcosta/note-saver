@@ -66,9 +66,10 @@ const deleteNotebook= async (req, res) => {
 const updateNotebook= async (req, res) => {
     try{
         const id=parseInt(req.params.id)
-        const {name}=req.body
-        console.log(name)
-        const { rows } = await pool.query('UPDATE notebooks SET notebook_name=$1 WHERE notebook_id=$2',[name,id])
+        const {name,description}=req.body
+        console.log('hh',name)
+        console.log('mm',description)
+        const { rows } = await pool.query('UPDATE notebooks SET notebook_name=$1,notebook_desc=$2 WHERE notebook_id=$3',[name,description,id])
         console.log(`updated notebook at:${id}`)
         res.send(`updated notebook at:${id}`)
 
