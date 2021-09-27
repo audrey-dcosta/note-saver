@@ -13,7 +13,7 @@ export const Notebook = ({notebook,handleClick,delete_notebook,getNotebookById})
                         <OptionsMenu delete_notebook={delete_notebook} id={notebook.notebook_id} getNotebookById={getNotebookById}/>
                     </div>
                 <div className="mt-2 sm:mt-12 flex justify-end w-full ">
-                    <button  onClick={()=>{handleClick(notebook.notebook_id)}} className="p-2 flex rounded-lg bg-gray-100 items-center hover:bg-orange-550 hover:text-gray-100"><span>View</span><HiChevronRight/></button>
+                    <button  onClick={()=>{handleClick(notebook.notebook_id)}} className="btn-solid flex items-center"><span>View</span><HiChevronRight className="ml-2 text-xl"/></button>
 
                 </div>
                 </div>

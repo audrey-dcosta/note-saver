@@ -35,3 +35,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.btn-solid{
+  @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange-550 text-lg font-medium text-white hover:bg-orange-570 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-570 sm:ml-3 sm:w-auto sm:text-sm;
+}
+
+.btn-gray{
+  @apply w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;
+}

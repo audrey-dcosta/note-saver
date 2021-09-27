@@ -13,30 +13,39 @@ export default function NotebookList() {
     const [notebook, setNotebook] = useState(null)
     let [createOpen,setCreateOpen]= useState(false)
     let [updateOpen,setUpdateOpen]= useState(false)
-    
+    const headers={Accept:"application/json", "Content-type":"application/json"}
     const history= useHistory()
-
-    const notify = (text) => toast.success(text);
-
-
-    const handleClick=(id)=>{
-        history.push(`/notebook/${id}`);
-    }
-
-    function toggleUpdate() {
-        setUpdateOpen(!updateOpen)
-      }
-    function toggleCreate() {
-        setCreateOpen(!createOpen)
-      }
-
-
 
     useEffect(() => {
         console.log('started')
         loadNotebooks()
-        
     }, [])
+
+    const notify = (text) => toast.success(text);
+    const handleClick=(id)=>history.push(`/notebook/${id}`);
+    const toggleUpdate=()=>setUpdateOpen(!updateOpen)
+    const toggleCreate=()=>setCreateOpen(!createOpen)
+
+    function getNotebookById(id){
+        fetch(`http://localhost:3001/api/notebook/${id}`)
+        .then(res=>res.json())
+        .then(data=>{
+            setNotebook(data)
+            toggleUpdate()
+        })
+    }
+    function createNotebook(formData){
+      fetch('http://localhost:3001/api/notebook/add',{
+          method:"POST",
+          body:JSON.stringify(formData),
+          headers:headers
+      }).then(res=>res.json()).then(result=>{
+          toggleCreate()
+          notify(`created Notebook ${formData.name}`)
+      }).catch(err=>{
+          console.log(err)
+      })
+    }
     function loadNotebooks(){
         fetch('http://localhost:3001/api/notebooks').then(response=>response.json()).then(result=>{
             setNotebooks(result)
@@ -44,28 +53,14 @@ export default function NotebookList() {
         }).catch(exception=>{
             console.log(exception)
         })
-
     }
-    
-    function getNotebookById(id){
-        fetch(`http://localhost:3001/api/notebook/${id}`)
-        .then(response=>response.json())
-        .then(result=>{
-            console.log('nmo',result)
-            setNotebook(result[0])
-            console.log(notebook)
-            toggleUpdate()
-        })
-    }
-
     function update_notebook(formData,id){
       fetch(`http://localhost:3001/api/notebook/${id}`,{
           method:"PUT",
           body:JSON.stringify(formData),
-          headers:{Accept:"application/json",
-          "Content-type":"application/json"}
-      }).then(result=>{
-          console.log(result)
+          headers:headers
+      }).then(res=>{
+          console.log(res)
           toggleUpdate()
           notify('updated Notebook')
           loadNotebooks()
@@ -73,34 +68,13 @@ export default function NotebookList() {
           console.log(err)
       })
     }
-    function createNotebook(formData){
-        console.log('jjj')
-        console.log(formData)
-        console.log('jjj')
-      fetch('http://localhost:3001/api/notebook/add',{
-          method:"POST",
-          // mode:"no-cors",
-          body:JSON.stringify(formData),
-          headers:{Accept:"application/json",
-          "Content-type":"application/json"}
-      }).then(response=>response.json()).then(result=>{
-          console.log(result)
-          toggleCreate()
-          notify(`created Notebook ${formData.name}`)
-      }).catch(err=>{
-          console.log(err)
-      })
-    }
-  
-
     function delete_notebook(id){
         fetch(`http://localhost:3001/api/notebook/${id}`,{
             method:"DELETE",
         })
-        .then(response=>response.text())
+        .then(res=>res.text())
         .then(result=>{
-            notify('deleted Notebook')
-            console.log('deleted')
+            notify('Deleted Notebook')
             loadNotebooks()
         }).catch(err=>{
             console.log(err)
