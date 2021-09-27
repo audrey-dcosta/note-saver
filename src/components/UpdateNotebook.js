@@ -1,7 +1,7 @@
 import React,{ Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-export const UpdateNotebook = ({updateOpen,closeModal,notebook}) => {
+export const UpdateNotebook = ({updateOpen,toggleUpdate,notebook,update_notebook}) => {
 
     return (
         <>
@@ -9,7 +9,7 @@ export const UpdateNotebook = ({updateOpen,closeModal,notebook}) => {
           <Dialog
             as="div"
             className="fixed inset-0 z-10 overflow-y-auto"
-            onClose={closeModal}
+            onClose={toggleUpdate}
           >
             <div className="min-h-screen px-4 text-center">
               <Transition.Child

@@ -1,7 +1,7 @@
 import React,{ Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-export const AddNotebook = ({isOpen,closeModal,createNotebook}) => {
+export const AddNotebook = ({createOpen,toggleCreate,createNotebook}) => {
     const initialFormData=Object.freeze({name:'',description:''})
     const [formData,updateFormData]=useState(initialFormData)
     
@@ -12,25 +12,14 @@ export const AddNotebook = ({isOpen,closeModal,createNotebook}) => {
         [e.target.name]:e.target.value.trim()
       })
       console.log(formData)
-      // setNotebook(e.target.name:e.target.value)
   }
-  
-//   const handleSubmit=(e)=>{
-//     console.log('aaaaa')
-//     e.preventDefault()
-//     updateFormData({
-//       ...formData,
-//     })
-//     console.log(formData)
-//   }
-
     return (
         <>
-        <Transition appear show={isOpen} as={Fragment}>
+        <Transition appear show={createOpen} as={Fragment}>
           <Dialog
             as="div"
             className="fixed inset-0 z-10 overflow-y-auto"
-            onClose={closeModal}
+            onClose={toggleCreate}
           >
             <div className="min-h-screen px-4 text-center">
               <Transition.Child
@@ -83,7 +72,7 @@ export const AddNotebook = ({isOpen,closeModal,createNotebook}) => {
                   <button
                       type="Submit"
                       className="inline-flex justify-center px-4 py-2 text-lg font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md hover:bg-orange-550 hover:text-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                      onClick={closeModal}
+                      onClick={toggleCreate}
                     >
                       Cancel
                     </button>

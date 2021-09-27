@@ -10,7 +10,7 @@ import {UpdateNotebook} from './/UpdateNotebook'
 export default function NotebookList() {
     const [notebooks, setNotebooks] = useState(null)
     const [notebook, setNotebook] = useState(null)
-    let [isOpen,setIsOpen]= useState(false)
+    let [createOpen,setCreateOpen]= useState(false)
     let [updateOpen,setUpdateOpen]= useState(false)
     
     const history= useHistory()
@@ -22,8 +22,8 @@ export default function NotebookList() {
     function toggleUpdate() {
         setUpdateOpen(!updateOpen)
       }
-    function toggleModal() {
-        setIsOpen(!isOpen)
+    function toggleCreate() {
+        setCreateOpen(!createOpen)
       }
 
 
@@ -75,7 +75,7 @@ export default function NotebookList() {
           "Content-type":"application/json"}
       }).then(response=>response.json()).then(result=>{
           console.log(result)
-          toggleModal()
+          toggleCreate()
       }).catch(err=>{
           console.log(err)
       })
@@ -99,7 +99,7 @@ export default function NotebookList() {
         <div className="p-1 sm:p-6 flex items-center justify-center w-full ">
         {notebooks && (
             <div className="grid grid-cols-2 items-center justify-items-center gap-1 w-full sm:w-11/12 sm:grid-cols-4 sm:gap-4 md:w-4/6">
-                <div onClick={toggleModal} className="group box-content  border-4 border-dashed border-gray-200 w-full rounded-lg text-orange-550 flex flex-col justify-center items-center h-full  hover:bg-orange-550 hover:shadow-lg hover:text-white hover:border-transparent">
+                <div onClick={toggleCreate} className="group box-content  border-4 border-dashed border-gray-200 w-full rounded-lg text-orange-550 flex flex-col justify-center items-center h-full  hover:bg-orange-550 hover:shadow-lg hover:text-white hover:border-transparent">
                 <div className="p-2 items-center text-2xl flex space-x-2">
                 <GoPlus/>
                 <span>Notebook</span>
@@ -117,8 +117,8 @@ export default function NotebookList() {
                 </div>
                 )}
             
-            {isOpen && <AddNotebook isOpen={isOpen} closeModal={toggleModal} createNotebook={createNotebook}></AddNotebook>}
-            {updateOpen && <UpdateNotebook isOpen={isOpen} closeModal={toggleUpdate} notebook={notebook} updateOpen={updateOpen} update_notebook={update_notebook}></UpdateNotebook>}
+            {createOpen && <AddNotebook createOpen={createOpen} toggleCreate={toggleCreate} createNotebook={createNotebook}></AddNotebook>}
+            {updateOpen && <UpdateNotebook toggleUpdate={toggleUpdate} notebook={notebook} updateOpen={updateOpen} update_notebook={update_notebook}></UpdateNotebook>}
 
     </div>
     )
