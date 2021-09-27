@@ -2,36 +2,7 @@ import React,{ Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 export const UpdateNotebook = ({updateOpen,closeModal,notebook}) => {
-    // const initialFormData=Object.freeze({name:'',description:''})
-    // const [formData,updateFormData]=useState(initialFormData)
-    // const handleChange=(e)=>{
-    //   e.preventDefault()
-    //   updateFormData({
-    //     ...formData,
-    //     [e.target.name]:e.target.value.trim()
-    //   })
-    //   console.log(formData)
-      // setNotebook(e.target.name:e.target.value)
-//   }
-  
-//   function handleSubmit(){
 
-//       console.log('jjj')
-//       console.log(formData)
-//       console.log('jjj')
-//     fetch('http://localhost:3001/api/notebook/add',{
-//         method:"POST",
-//         // mode:"no-cors",
-//         body:JSON.stringify(formData),
-//         headers:{Accept:"application/json",
-//         "Content-type":"application/json"}
-//     }).then(response=>response.json()).then(result=>{
-//         console.log(result)
-//         closeModal()
-//     }).catch(err=>{
-//         console.log(err)
-//     })
-//   }
     return (
         <>
         <Transition appear show={updateOpen} as={Fragment}>
@@ -78,8 +49,8 @@ export const UpdateNotebook = ({updateOpen,closeModal,notebook}) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <form >
-                      <input name="name" value={notebook.notebook_name} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Enter Notebook name"/>
-                      <textarea name="description" value={notebook.notebook_desc} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" placeholder="Description"/>
+                      <input name="name" defaultValue={notebook.notebook_name} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Enter Notebook name"/>
+                      <textarea name="description" defaultValue={notebook.notebook_desc} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" placeholder="Description"/>
                       {/* <div className="flex space-x-4">
                       <input className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Add Tag"/>
                       <button className="ring-2 bg-orange-550 ring-orange-550 my-4 p-1 text-gray-50 rounded-lg font-medium px-3 text-3xl">+</button>

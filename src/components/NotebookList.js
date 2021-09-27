@@ -4,7 +4,7 @@ import { AddNotebook } from './AddNotebook'
 import {GoPlus} from 'react-icons/go'
 import {useHistory} from 'react-router-dom'
 import {SkeletonNotebook} from './Skeletons/SkeletonNotebook'
-// import {UpdateNotebook} from './/UpdateNotebook'
+import {UpdateNotebook} from './/UpdateNotebook'
 
 
 export default function NotebookList() {
@@ -45,11 +45,12 @@ export default function NotebookList() {
     
     function getNotebookById(id){
         fetch(`http://localhost:3001/api/notebook/${id}`)
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data)
-            setNotebook(data)
-            // toggleUpdate()
+        .then(response=>response.json())
+        .then(result=>{
+            console.log('nmo',result)
+            setNotebook(result[0])
+            console.log(notebook)
+            toggleUpdate()
         })
     }
 
@@ -99,7 +100,7 @@ export default function NotebookList() {
                 )}
             
             {isOpen && <AddNotebook isOpen={isOpen} closeModal={toggleModal}></AddNotebook>}
-            {/* {updateOpen && <UpdateNotebook isOpen={isOpen} closeModal={toggleUpdate} notebook={notebook} updateOpen={updateOpen} update_notebook={update_notebook}></UpdateNotebook>} */}
+            {updateOpen && <UpdateNotebook isOpen={isOpen} closeModal={toggleUpdate} notebook={notebook} updateOpen={updateOpen} update_notebook={update_notebook}></UpdateNotebook>}
 
     </div>
     )
