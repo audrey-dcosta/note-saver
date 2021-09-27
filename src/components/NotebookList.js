@@ -63,6 +63,24 @@ export default function NotebookList() {
         .catch(err=>console.log(err))
 
     }
+    function createNotebook(formData){
+        console.log('jjj')
+        console.log(formData)
+        console.log('jjj')
+      fetch('http://localhost:3001/api/notebook/add',{
+          method:"POST",
+          // mode:"no-cors",
+          body:JSON.stringify(formData),
+          headers:{Accept:"application/json",
+          "Content-type":"application/json"}
+      }).then(response=>response.json()).then(result=>{
+          console.log(result)
+          toggleModal()
+      }).catch(err=>{
+          console.log(err)
+      })
+    }
+  
 
     function delete_notebook(id){
         fetch(`http://localhost:3001/api/notebook/${id}`,{
@@ -99,7 +117,7 @@ export default function NotebookList() {
                 </div>
                 )}
             
-            {isOpen && <AddNotebook isOpen={isOpen} closeModal={toggleModal}></AddNotebook>}
+            {isOpen && <AddNotebook isOpen={isOpen} closeModal={toggleModal} createNotebook={createNotebook}></AddNotebook>}
             {updateOpen && <UpdateNotebook isOpen={isOpen} closeModal={toggleUpdate} notebook={notebook} updateOpen={updateOpen} update_notebook={update_notebook}></UpdateNotebook>}
 
     </div>

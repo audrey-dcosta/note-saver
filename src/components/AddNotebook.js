@@ -1,7 +1,7 @@
 import React,{ Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
-export const AddNotebook = ({isOpen,closeModal}) => {
+export const AddNotebook = ({isOpen,closeModal,createNotebook}) => {
     const initialFormData=Object.freeze({name:'',description:''})
     const [formData,updateFormData]=useState(initialFormData)
     
@@ -24,24 +24,6 @@ export const AddNotebook = ({isOpen,closeModal}) => {
 //     console.log(formData)
 //   }
 
-  function handleSubmit(){
-
-      console.log('jjj')
-      console.log(formData)
-      console.log('jjj')
-    fetch('http://localhost:3001/api/notebook/add',{
-        method:"POST",
-        // mode:"no-cors",
-        body:JSON.stringify(formData),
-        headers:{Accept:"application/json",
-        "Content-type":"application/json"}
-    }).then(response=>response.json()).then(result=>{
-        console.log(result)
-        closeModal()
-    }).catch(err=>{
-        console.log(err)
-    })
-  }
     return (
         <>
         <Transition appear show={isOpen} as={Fragment}>
@@ -87,7 +69,7 @@ export const AddNotebook = ({isOpen,closeModal}) => {
                     Add New Notebook
                   </Dialog.Title>
                   <div className="mt-2">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={()=>createNotebook}>
                       <input name="name" onChange={handleChange} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Enter Notebook name"/>
                       <textarea name="description" onChange={handleChange} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" placeholder="Description"/>
                       {/* <div className="flex space-x-4">
@@ -108,7 +90,7 @@ export const AddNotebook = ({isOpen,closeModal}) => {
                     <button
                       type="button"
                       className="inline-flex justify-center px-4 py-2 text-lg font-medium text-gray-900 bg-gray-100 border border-transparent rounded-md hover:bg-orange-550 hover:text-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                      onClick={handleSubmit}
+                      onClick={()=>createNotebook(formData)}
                     >
                       Add
                     </button>
