@@ -59,8 +59,8 @@ export const UpdateNotebook = ({updateOpen,toggleUpdate,notebook,update_notebook
                   </Dialog.Title>
                   <div className="mt-2">
                     <form onSubmit={()=>update_notebook(formData,notebook.notebook_id)}>
-                      <input name="name" onChange={handleChange} defaultValue={notebook.notebook_name} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Enter Notebook name"/>
-                      <textarea name="description" onChange={handleChange} defaultValue={notebook.notebook_desc} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" placeholder="Description"/>
+                      <input name="name" onChange={handleChange} defaultValue={notebook.notebook_name.trim()} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Enter Notebook name"/>
+                      <textarea name="description" onChange={handleChange} defaultValue={notebook.notebook_desc.trim()} className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" placeholder="Description"/>
                       {/* <div className="flex space-x-4">
                       <input className="p-2 my-4 ring-2 text-xl ring-gray-300 rounded-lg w-full focus:outline-none focus:ring-orange-550" type="text" placeholder="Add Tag"/>
                       <button className="ring-2 bg-orange-550 ring-orange-550 my-4 p-1 text-gray-50 rounded-lg font-medium px-3 text-3xl">+</button>

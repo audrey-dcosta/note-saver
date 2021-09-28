@@ -30,7 +30,9 @@ export default function NotebookList() {
         fetch(`http://localhost:3001/api/notebook/${id}`)
         .then(res=>res.json())
         .then(data=>{
-            setNotebook(data)
+            console.log(data)
+            setNotebook(data[0])
+            console.log(notebook)
             toggleUpdate()
         })
     }
