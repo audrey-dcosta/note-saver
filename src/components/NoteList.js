@@ -55,7 +55,7 @@ export default function NoteList() {
 
     const loadNotes=()=>{
         console.log('started')
-        fetch('http://localhost:3001/api/notebookNotes/7')
+        fetch(`http://localhost:3001/api/notebookNotes/${id}`)
         .then(response=>response.json())
         .then(result=>{
             setNotes(result)
