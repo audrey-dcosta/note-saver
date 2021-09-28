@@ -12,7 +12,18 @@ pool.connect(err=>{
 
 const getAllNotes= async (req, res) => {
     try{
-    const { rows } = await pool.query('SELECT * FROM notebooks ORDER BY notebook_id ASC')
+    const { rows } = await pool.query('SELECT * FROM notes ORDER BY note_id ASC')
+    res.send(rows)
+    }
+    catch(err){
+        res.send(err.message)
+        console.log(err.message)
+    }
+}
+const getNote= async (req, res) => {
+    try{
+    const id=req.params.id
+    const { rows } = await pool.query('SELECT * FROM notes WHERE note_id=$1 ORDER BY note_id ASC',[id])
     res.send(rows)
     }
     catch(err){
@@ -79,6 +90,7 @@ const updateNote= async (req, res) => {
 
 module.exports={
     getAllNotes,
+    getNote,
     getNotesInNotebook,
     addNote,
     deleteNote,
