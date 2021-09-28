@@ -2,7 +2,7 @@ import React from 'react'
 import {HiTrash,HiPencil} from 'react-icons/hi'
 import {timeSince} from '../helpers/functions'
 
-export const Note = ({note}) => {
+export const Note = ({note,delete_note}) => {
     var time_since = timeSince(note.note_createdAt)
 
     return (
@@ -10,7 +10,7 @@ export const Note = ({note}) => {
             <div className="flex justify-between">
             <p className="text-gray-800 font-semibold">{note.note_title}</p>
             <div className="text-gray-800 text-2xl flex space-x-2 ">
-            <HiTrash className="hover:text-orange-550"/>
+            <HiTrash onClick={()=>delete_note(note.note_id)}className="hover:text-orange-550"/>
             <HiPencil className="hover:text-orange-550"/>
             </div>
 

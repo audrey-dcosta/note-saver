@@ -34,8 +34,8 @@ const getNotesInNotebook= async (req, res) => {
 
 const addNote =async (req, res) => {
     try{
-        const id=req.params.id
-        const {title,content}=req.body
+        // const id=req.params.id
+        const {id,title,content}=req.body
         const createdAt=new Date()
         console.log(createdAt)
         const { rows } = await pool.query('INSERT INTO notes (notebook_id,note_title,note_content,"note_createdAt") VALUES ($1,$2,$3,$4) RETURNING *',[id,title,content,createdAt])
